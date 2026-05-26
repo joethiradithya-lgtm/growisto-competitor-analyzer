@@ -86,14 +86,20 @@ ALIGN_TOP_WRAP = Alignment(vertical="top", horizontal="left", wrap_text=True)
 ALIGN_CENTER = Alignment(vertical="center", horizontal="center", wrap_text=True)
 
 
-def _val(v: Any) -> str:
-    """Defensive conversion. None / empty / missing → em-dash. Lists → '\n'-joined."""
+def _val(v: Any) -> Any:
+    """Defensive value normalisation that PRESERVES NUMERIC TYPES so Excel
+    can sort / filter / sum them. Strings stay strings; ints stay ints;
+    floats stay floats; bools become 'Yes'/'No' strings (Excel doesn't
+    sort booleans well); lists/dicts get joined to multi-line strings.
+
+    None / empty / missing → em-dash string '—' (cosmetic placeholder).
+    """
     if v is None or v == "" or v == []:
         return "—"
     if isinstance(v, bool):
         return "Yes" if v else "No"
     if isinstance(v, (int, float)):
-        return str(v)
+        return v  # ← keep as number so Excel treats it numerically
     if isinstance(v, list):
         clean = [str(x) for x in v if x not in (None, "", [])]
         return "\n".join(clean) if clean else "—"
@@ -101,8 +107,17 @@ def _val(v: Any) -> str:
         if not v:
             return "—"
         return "\n".join(f"{k}: {_val(val)}" for k, val in v.items())
+    # Strings: try to coerce numeric-looking strings to numbers so they
+    # ALSO sort/filter correctly. Otherwise return the trimmed string.
     s = str(v).strip()
-    return s if s else "—"
+    if not s:
+        return "—"
+    try:
+        if "." in s:
+            return float(s)
+        return int(s)
+    except (ValueError, TypeError):
+        return s
 
 
 def _h(ws, row: int, col: int, text: str) -> None:
@@ -117,10 +132,14 @@ def _d(ws, row: int, col: int, value: Any, *,
        font: Font = DATA_FONT,
        fill: str | None = None,
        align: Alignment = ALIGN_TOP_WRAP) -> None:
-    c = ws.cell(row=row, column=col, value=_val(value))
+    normalized = _val(value)
+    c = ws.cell(row=row, column=col, value=normalized)
     c.font = font
     c.alignment = align
     c.border = BORDER
+    # Right-align numeric cells (Excel convention)
+    if isinstance(normalized, (int, float)) and not isinstance(normalized, bool):
+        c.alignment = Alignment(vertical="center", horizontal="right", wrap_text=False)
     if fill:
         c.fill = PatternFill("solid", fgColor=fill)
 
