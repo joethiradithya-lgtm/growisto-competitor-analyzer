@@ -1,0 +1,2 @@
+# This file ensures the Outputs/ folder is tracked by git even when empty.
+# Generated output files (XLSX, JSON) are gitignored — see ../.gitignore.

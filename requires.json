@@ -1,0 +1,31 @@
+{
+  "runtime_credentials": true,
+  "permissions": {
+    "allow_bash": [
+      "python3 scripts/run_analysis.py *",
+      "python3 scripts/build_workbook.py *",
+      "python3 -m pip install -r requirements.txt",
+      "cat *",
+      "ls *"
+    ],
+    "deny_bash": [
+      "rm -rf *"
+    ]
+  },
+  "mcps": [],
+  "credentials": [
+    {
+      "name": "AHREFS_API_KEY",
+      "location": "environment variable",
+      "scope": "all sessions for this user",
+      "purpose": "Authenticates calls to Ahrefs v3 API for the Off-Page section (DR, backlinks, referring domains, organic traffic). Required for Off-Page; the section returns `available: False, reason: 'no_key'` per domain if unset. Growisto has a subscription; teammates use the org's shared key."
+    },
+    {
+      "name": "PAGESPEED_API_KEY",
+      "location": "environment variable",
+      "scope": "all sessions for this user",
+      "purpose": "Authenticates calls to Google PageSpeed Insights for the Technical section's Core Web Vitals. Optional — falls back to the Suite's hardcoded free-tier key if unset. Set this if you hit quota limits."
+    }
+  ],
+  "notes": "Plugin makes outbound HTTPS calls to api.ahrefs.com and pagespeedonline.googleapis.com (both keyed). Also fetches homepages + sitemaps + a few inner pages from the user-supplied domains for on-page / hygiene / GEO scraping. No LLM API calls from scripts — Claude does ALL AI classifications via the SKILL.md workflow. Max 4 domains per run (1 primary + 3 competitors)."
+}

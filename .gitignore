@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+.venv/
+venv/
+env/
+ENV/
+
+# Plugin outputs — generated files go into Outputs/ (folder tracked via .gitkeep,
+# contents gitignored so generated XLSX/JSON files never get committed).
+Outputs/*
+!Outputs/.gitkeep
+
+# Legacy / temp paths
+output/
+*.xlsx
+*.csv
+ca_prep*.json
+ca_scorecard*.json
+
+# Secrets — never commit
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code local state
+.claude/
