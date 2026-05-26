@@ -53,12 +53,12 @@ python3 scripts/run_analysis.py prepare \
     --competitor <comp-1> --competitor <comp-2> --competitor <comp-3> \
     --sections off,on,tech,hyg,geo \
     --country <CC> \
-    --out Outputs/ca_prep.json
+    --out .work/ca_prep.json
 ```
 
 The script will stream per-domain, per-section progress. Expect 1-3 minutes per domain (PSI is the slowest step — ~30s/domain for mobile + desktop combined).
 
-### Step 2 — Read `Outputs/ca_prep.json` and do the AI classifications
+### Step 2 — Read `.work/ca_prep.json` and do the AI classifications
 
 The prep JSON has this shape for each domain:
 
@@ -151,7 +151,7 @@ For EACH domain (primary + each competitor), add a `classifications` block with 
 
 ### Step 3 — Write the scorecard JSON
 
-Write the merged data (raw + classifications) to `Outputs/ca_scorecard.json`. Use the same structure as `ca_prep.json`, adding a `classifications` block per domain. Also add a top-level `summary.biggest_gaps` array — for each section pick 1 metric where the primary trails the best competitor most:
+Write the merged data (raw + classifications) to `.work/ca_scorecard.json` (intermediate — final deliverable Excel goes in `Outputs/`). Use the same structure as `ca_prep.json`, adding a `classifications` block per domain. Also add a top-level `summary.biggest_gaps` array — for each section pick 1 metric where the primary trails the best competitor most:
 
 ```json
 {
@@ -179,7 +179,7 @@ If you don't fill `summary.biggest_gaps`, the Excel builder auto-computes a defa
 ### Step 4 — Build the Excel
 
 ```bash
-python3 scripts/run_analysis.py build Outputs/ca_scorecard.json Outputs/competitor-analysis-<primary>-<date>.xlsx
+python3 scripts/run_analysis.py build .work/ca_scorecard.json Outputs/competitor-analysis-<primary>-<date>.xlsx
 ```
 
 This produces a 6-tab workbook.

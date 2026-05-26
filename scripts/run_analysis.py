@@ -23,10 +23,10 @@ Usage:
         --competitor puma.com \\
         --competitor newbalance.com \\
         --sections off,on,tech,hyg,geo \\
-        --out Outputs/ca_prep.json
+        --out .work/ca_prep.json
 
     # Build Excel from completed scorecard
-    python3 run_analysis.py build Outputs/ca_scorecard.json Outputs/audit.xlsx
+    python3 run_analysis.py build .work/ca_scorecard.json Outputs/audit.xlsx
 """
 from __future__ import annotations
 

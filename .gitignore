@@ -15,6 +15,10 @@ ENV/
 Outputs/*
 !Outputs/.gitkeep
 
+# Intermediate working files (prep JSONs, scratch scripts) — gitignored except .gitkeep
+.work/*
+!.work/.gitkeep
+
 # Legacy / temp paths
 output/
 *.xlsx
