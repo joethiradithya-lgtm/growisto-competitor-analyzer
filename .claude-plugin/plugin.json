@@ -1,6 +1,6 @@
 {
   "name": "growisto-competitor-analyzer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Run a head-to-head competitive SEO + GEO audit for 1 primary client domain vs 1-3 competitors. Covers 5 sections — Off-Page (Ahrefs DR/backlinks), On-Page (pages/blog/footer/homepage/case-studies), Technical (PSI Core Web Vitals + metadata + rendering type), Hygiene (breadcrumbs + EEAT + slug audit), and GEO (schema + AI Overview readiness). Produces a 6-tab Excel (Summary + 5 sections) with rows-as-metrics and columns-as-domains for side-by-side comparison. Claude does the AI classifications (clarity scoring, EEAT scoring, footer tagging, GEO assessment) — no ANTHROPIC_API_KEY needed. Requires AHREFS_API_KEY + PAGESPEED_API_KEY env vars.",
   "author": {
     "name": "Growisto SEO Team",

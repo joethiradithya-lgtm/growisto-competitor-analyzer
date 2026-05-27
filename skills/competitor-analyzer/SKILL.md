@@ -1,6 +1,6 @@
 ---
 name: competitor-analyzer
-version: "0.1.0"
+version: "0.2.0"
 description: Run a head-to-head competitive SEO + GEO audit for 1 primary client domain vs 1-3 competitors. Five sections — Off-Page (Ahrefs), On-Page, Technical (PSI), Hygiene, GEO. Python fetches raw data; you (Claude) classify, score, and verify. Output is a 6-tab Excel with rows-as-metrics, columns-as-domains. Triggers whenever the user asks to run a competitor analysis, compare a domain against competitors, audit competitive SEO, do a head-to-head SEO audit, benchmark a client domain, or check how a domain stacks up against rivals on SEO, technical, hygiene, or GEO dimensions. Also triggers on phrases like "competitor SEO audit for", "compare X vs Y", "how does X compare to Y on SEO".
 trigger: "run competitor analysis for"
 tags:
