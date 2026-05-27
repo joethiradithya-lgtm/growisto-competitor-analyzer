@@ -1,31 +1,49 @@
 {
+  "plugin": "growisto-competitor-analyzer",
+  "version": "0.2.0",
+  "generated": "2026-05-27",
+  "generated_by": "growisto-seo-plugins conversion",
   "runtime_credentials": true,
   "permissions": {
-    "allow_bash": [
-      "python3 scripts/run_analysis.py *",
-      "python3 scripts/build_workbook.py *",
-      "python3 -m pip install -r requirements.txt",
-      "cat *",
-      "ls *"
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(pip3 install*)",
+      "Bash(python3 -m pip install*)"
     ],
-    "deny_bash": [
-      "rm -rf *"
+    "deny": [
+      "Bash(rm -rf *)"
     ]
   },
   "mcps": [],
   "credentials": [
     {
-      "name": "AHREFS_API_KEY",
-      "location": "environment variable",
-      "scope": "all sessions for this user",
-      "purpose": "Authenticates calls to Ahrefs v3 API for the Off-Page section (DR, backlinks, referring domains, organic traffic). Required for Off-Page; the section returns `available: False, reason: 'no_key'` per domain if unset. Growisto has a subscription; teammates use the org's shared key."
+      "name": "Ahrefs API key",
+      "purpose": "Off-Page section — Domain Rating, backlinks, referring domains, organic traffic, top anchors (Ahrefs API v3).",
+      "baked": false,
+      "runtime": true,
+      "location": "AHREFS_API_KEY env var (per-user; Growisto has a subscription)",
+      "scope": "Ahrefs API v3 read",
+      "fallback_behavior": "Off-Page section returns {available:false, reason:'no_key'} per domain; other 4 sections still run."
     },
     {
-      "name": "PAGESPEED_API_KEY",
-      "location": "environment variable",
-      "scope": "all sessions for this user",
-      "purpose": "Authenticates calls to Google PageSpeed Insights for the Technical section's Core Web Vitals. Optional — falls back to the Suite's hardcoded free-tier key if unset. Set this if you hit quota limits."
+      "name": "Google PageSpeed Insights API key",
+      "purpose": "Technical section — Core Web Vitals (LCP/CLS/TBT) + performance scores, mobile + desktop.",
+      "baked": false,
+      "runtime": true,
+      "location": "PAGESPEED_API_KEY env var (optional)",
+      "scope": "PSI v5 read",
+      "fallback_behavior": "Optional — falls back to the Suite's hardcoded PSI key / unauthenticated quota; slower but works."
     }
   ],
-  "notes": "Plugin makes outbound HTTPS calls to api.ahrefs.com and pagespeedonline.googleapis.com (both keyed). Also fetches homepages + sitemaps + a few inner pages from the user-supplied domains for on-page / hygiene / GEO scraping. No LLM API calls from scripts — Claude does ALL AI classifications via the SKILL.md workflow. Max 4 domains per run (1 primary + 3 competitors)."
+  "org_settings_update": {
+    "permissions": {
+      "allow": [
+        "Bash(python3 *)",
+        "Bash(pip3 install*)",
+        "Bash(python3 -m pip install*)"
+      ]
+    }
+  },
+  "zero_auth": false,
+  "zero_auth_reason": "RUNTIME: AHREFS_API_KEY (per-user env var) is required for the Off-Page section — cannot be baked. PAGESPEED_API_KEY is optional (hardcoded fallback). The other 4 sections run without any key."
 }

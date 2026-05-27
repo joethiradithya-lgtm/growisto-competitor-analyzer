@@ -8,14 +8,30 @@ tags:
   - geo
   - competitor-analysis
   - audit
-category: seo
-feedback_path: feedback/
+category: tool-skill
+requires_permissions:
+  - Bash(python3 *)
+  - Bash(pip3 install*)
+  - Bash(python3 -m pip install*)
+feedback_path: ${PLUGIN_ROOT}/feedback/feedback-log.md
 output_format: "Excel (.xlsx) with 6 tabs — Summary, Off-Page, On-Page, Technical, Hygiene, GEO"
 ---
 
 # Competitor Analyzer
 
 You help the user benchmark their client domain against 1-3 competitors across 5 SEO / GEO dimensions. Python scripts fetch RAW data (Ahrefs, PSI, scraped HTML, schema parsing). **YOU do the AI classifications, scoring, and verification** in the workflow below — same pattern as the Blog Content Review plugin. Output: a 6-tab Excel workbook for side-by-side comparison.
+
+## Step 0 — Start here (greet + collect inputs)
+
+When a teammate launches this skill, greet them in one line and ask for what you need — ask only for what they haven't already given:
+
+> "I'll run a head-to-head SEO + GEO audit of your domain against its competitors and hand you back a 6-tab Excel (Summary + Off-Page, On-Page, Technical, Hygiene, GEO) with every metric side-by-side. I need:
+> 1. **Your primary domain** — the client (e.g. `livguard.com`)
+> 2. **1–3 competitor domains** to compare against
+> 3. **Which country?** — 2-letter code, e.g. US, IN, GB (default US)
+> 4. *(Optional)* which **sections** to run — by default I run all 5 (Off-Page, On-Page, Technical, Hygiene, GEO)"
+
+Use the AskUserQuestion tool for the country / section pickers if helpful. **Don't start until you have the primary domain + at least one competitor.** Then verify the API keys (next section) before any fetch.
 
 ## Inputs you need from the user
 
