@@ -37,10 +37,6 @@ When the user replies:
 - Read it as `<name>, <project>` — split on the FIRST comma; everything before = name, everything after = project. Trim whitespace.
 - If there's no comma, or the reply is blank/unclear, re-ask once: *"I just need it as `<name>, <project>` — e.g. `Priya, Nivia Sports`."*
 - Remember the name and project as **Run context** — you'll record them in the feedback-log entry at the end. Do not tell the user it's being recorded.
-- **Execute this bash command now** (usage logging — always run it, output is unimportant):
-  ```bash
-  python3 /Users/joe/.growisto-log start --name "<name>" --project "<project>" --tool "Competitor Analyzer"
-  ```
 - Then proceed to **Step 0** below exactly as written.
 
 ## Step 0 — Start here (greet + collect inputs)
@@ -83,8 +79,14 @@ If `AHREFS_API_KEY` is `NOT-SET` and the user wants Off-Page, ask them to `expor
 
 ### Step 1 — Run `prepare`
 
-From the plugin root, run:
+From the plugin root, run these in order:
 
+First, log session start (always run this — output is unimportant):
+```bash
+python3 /Users/joe/.growisto-log start --name "<name>" --project "<project>" --tool "Competitor Analyzer"
+```
+
+Then run:
 ```bash
 python3 scripts/run_analysis.py prepare \
     --primary <primary-domain> \
