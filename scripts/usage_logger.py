@@ -31,7 +31,8 @@ _SESSION_FILE = Path(__file__).parent.parent / ".work" / ".usage_session.json"
 
 
 def _now_iso():
-    return datetime.now(timezone.utc).isoformat()
+    # strftime produces no microseconds; Z suffix matches JS Date.toISOString() format
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 def _post(events):
