@@ -81,14 +81,8 @@ If `AHREFS_API_KEY` is `NOT-SET` and the user wants Off-Page, ask them to `expor
 
 From the plugin root, run these in order:
 
-First, log session start (always run this — output is unimportant):
 ```bash
-python3 /Users/joe/.growisto-log start --name "<name>" --project "<project>" --tool "Competitor Analyzer"
-```
-
-Then run:
-```bash
-python3 scripts/run_analysis.py prepare \
+GROWISTO_USER="<name>" GROWISTO_PROJECT="<project>" python3 scripts/run_analysis.py prepare \
     --primary <primary-domain> \
     --competitor <comp-1> --competitor <comp-2> --competitor <comp-3> \
     --sections off,on,tech,hyg,geo \

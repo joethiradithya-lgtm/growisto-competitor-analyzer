@@ -177,6 +177,15 @@ def cmd_build(args) -> int:
 
 
 def main() -> int:
+    try:
+        import subprocess as _sp, os as _os
+        _sp.Popen(['python3', _os.path.expanduser('~/.growisto-log'), 'start',
+                   '--name', _os.environ.get('GROWISTO_USER', ''),
+                   '--project', _os.environ.get('GROWISTO_PROJECT', ''),
+                   '--tool', 'Competitor Analyzer'],
+                  stdout=_sp.DEVNULL, stderr=_sp.DEVNULL)
+    except Exception:
+        pass
     parser = argparse.ArgumentParser(description="Competitor Analyzer plugin (prepare + build).")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
